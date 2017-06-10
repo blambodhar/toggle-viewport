@@ -1,0 +1,228 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="../polymer/lib/elements/custom-style.html">
+
+<dom-module id="toggle-viewport">
+  <template>
+    <style>
+
+      :host {
+        display: flex;
+        flex-direction: column;
+        justify-content:space-around;
+        --header-color: #202020;
+        --body-color: #262626;
+        --active-color: #1a88ef;
+        --iframe-height: 100%;
+        --iframe-width: 100%;
+      }
+      header {
+        height: 50px;
+        background-color: var(--header-color);
+      }
+      main {
+        flex: 1;
+        display: block;
+        overflow: auto;
+        background-color: var(--body-color);
+      }
+      ul, li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      nav, ul {
+        height: 100%;
+      }
+      ul {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+      }
+      li, button {
+        display: flex;
+      }
+      iframe {
+        border: 0;
+        width: var(--iframe-width);
+        height: var(--iframe-height);
+        transition: all .5s ease-in-out; 
+        will-change: width, height, margin;
+        position: relative;
+        margin: auto;
+        display: block;
+      }
+
+      svg {
+        pointer-events: none;
+        opacity: .6;
+        transition: .5s;
+        margin: auto;
+      }
+      button {
+        min-width: 74px;
+        background-color: var( --header-color);
+        border: 0;
+        cursor: pointer;
+        outline: 0;
+      }
+      button:hover:not(.selected) {
+        background-color: rgba(255, 255, 255, .06);
+      }
+      button:active:not(.selected),
+      button:focus:not(.selected) {
+        background-color: rgba(255, 255, 255, .15);
+      }
+      .selected {
+        background-color: var(--active-color);
+      }
+
+      .selected svg,
+      button:hover svg { opacity: 1;}
+      path, circle {
+        fill: #fff;
+      }
+    </style>
+<header>
+  <nav id="nav">
+    <ul>
+        <li><button on-tap="resize" data-size="0, 0" class="selected">
+<svg  width="35px" height="35px" viewBox="0 0 35 35">
+<title>Full size</title>
+	<path d="M15.9,18.8l-7.3,7.3v-6.5c0-0.3-0.2-0.5-0.5-0.5s-0.5,0.2-0.5,0.5v7.7l0,0.2l0.3,0.3h7.9c0.3,0,0.5-0.2,0.5-0.5
+		s-0.2-0.5-0.5-0.5H9.3l7.3-7.3c0.2-0.2,0.2-0.5,0-0.7S16.1,18.6,15.9,18.8z"/>
+	<path d="M19.5,16.6l7.3-7.3v6.5c0,0.3,0.2,0.5,0.5,0.5s0.5-0.2,0.5-0.5V8.2l0-0.2l-0.3-0.3h-7.9c-0.3,0-0.5,0.2-0.5,0.5
+		s0.2,0.5,0.5,0.5h6.5l-7.3,7.3c-0.2,0.2-0.2,0.5,0,0.7S19.3,16.8,19.5,16.6z"/>
+</svg>
+  
+        </button></li>
+      <li><button on-tap="resize" data-size="1200, 650">
+<svg  width="53px" height="35px" viewBox="0 0 53 35">
+<title>Laptop</title>
+		<path class="st1" style="fill:none;" d="M46.3,7.5c0-1.4-1-2.6-2.3-2.6L9.2,4.7c-1.3,0-2.3,1.2-2.3,2.6L6.7,28.1l39.4,0.2L46.3,7.5z"/>
+		<path class="st1" style="fill:none;" d="M31.4,28.9l0,0.1c0,0.6-0.7,0.8-1.8,0.9C28.9,30,28,30,27.4,30l0,0l-0.5,0l-0.5,0c-4.1,0-4.1-0.6-4.1-1l0-0.1
+			L6.1,28.8l-5.4,0c0.2,1.5,1.3,1.6,1.7,1.6l0,0l48,0.3l0.1,0c0.1,0,0.6,0,1-0.3c0.4-0.3,0.6-0.7,0.7-1.3l-5.2,0
+			C46.8,29,31.4,28.9,31.4,28.9z"/>
+		<path d="M46.8,28.3L47,7.5c0-1.9-1.3-3.4-3-3.4L9.2,3.9c-1.6,0-3,1.5-3,3.4L6.1,28.1L0,28l0,0.4c0,2,1.3,2.8,2.3,2.8
+			c0,0,0.1,0,0.1,0l47.9,0.3c0,0,0,0,0.1,0c0.2,0,0.8,0,1.3-0.4c0.5-0.3,1.1-1,1.1-2.4l0-0.4L46.8,28.3z M6.9,7.3
+			c0-1.4,1-2.6,2.3-2.6L44,4.8c1.3,0,2.3,1.2,2.3,2.6l-0.1,20.8L6.7,28.1L6.9,7.3z M51.4,30.4c-0.4,0.3-0.8,0.3-1,0.3l-0.1,0
+			l-48-0.3l0,0c-0.4,0-1.5-0.1-1.7-1.6l5.4,0l16.3,0.1l0,0.1c0,0.4,0,1,4.1,1l0.5,0l0.5,0l0,0c0.6,0,1.5,0,2.3-0.1
+			c1.1-0.1,1.8-0.3,1.8-0.9l0-0.1L46.8,29l5.2,0C52,29.7,51.8,30.1,51.4,30.4z"/>
+</svg>
+        </button></li>
+      <li><button on-tap="resize" data-size="768, 1024">
+<svg  width="35px" height="35px" viewBox="0 0 35 35">
+<title>Tablet</title>
+<path d="M27,4H8.4C7.7,4,7.1,4.6,7.1,5.3v24.8c0,0.7,0.6,1.3,1.3,1.3H27c0.7,0,1.3-0.6,1.3-1.3V5.3C28.4,4.6,27.8,4,27,4z
+	 M27.5,30.1c0,0.2-0.2,0.4-0.4,0.4H8.4c-0.2,0-0.4-0.2-0.4-0.4V5.3C8,5,8.2,4.8,8.4,4.8H27c0.2,0,0.4,0.2,0.4,0.4V30.1z M18.6,28.8
+	c0,0.5-0.4,0.9-0.9,0.9c-0.5,0-0.9-0.4-0.9-0.9c0-0.5,0.4-0.9,0.9-0.9C18.2,27.9,18.6,28.3,18.6,28.8z M8.8,27h17.7V5.7H8.8V27z
+	 M9.3,6.2h16.9v20.4H9.3V6.2z"/>
+</svg>
+        </button></li>
+      <li><button on-tap="resize" data-size="375, 667">
+<svg  width="35px" height="35px" viewBox="0 0 35 35">
+<title>Mobile</title>
+	<path d="M23.9,8.6H11.6c-0.7,0-1.3,0.6-1.3,1.3v0.4v17v2.9c0,0.7,0.6,1.3,1.3,1.3h12.3c0.7,0,1.3-0.6,1.3-1.3v-2.9v-17V9.8
+		C25.1,9.1,24.5,8.6,23.9,8.6z M24.3,26.9H11.1V10.7h13.1V26.9z M24.3,30.2c0,0.2-0.2,0.4-0.4,0.4H11.6c-0.2,0-0.4-0.2-0.4-0.4v-2.9
+		h13.1V30.2z M11.1,10.2V9.8c0-0.2,0.2-0.4,0.4-0.4h12.3c0.2,0,0.4,0.2,0.4,0.4v0.4H11.1z"/>
+	<circle cx="17.7" cy="28.9" r="0.8"/>
+</svg>
+        </button></li>
+      <li><button on-tap="resize" data-size="667, 375">
+        <svg  width="35px" height="35px" viewBox="0 0 35 35">
+<title>Mobile portrait</title>
+	<path d="M29.1,30.2V17.9c0-0.7-0.6-1.3-1.3-1.3h-0.4h-17H7.5c-0.7,0-1.3,0.6-1.3,1.3v12.3c0,0.7,0.6,1.3,1.3,1.3h2.9h17h0.4
+		C28.6,31.4,29.1,30.9,29.1,30.2z M10.9,30.6V17.5h16.2v13.1H10.9z M7.5,30.6c-0.2,0-0.4-0.2-0.4-0.4V17.9c0-0.2,0.2-0.4,0.4-0.4
+		h2.9v13.1H7.5z M27.5,17.5h0.4c0.2,0,0.4,0.2,0.4,0.4v12.3c0,0.2-0.2,0.4-0.4,0.4h-0.4V17.5z"/>
+    <circle cx="8.8" cy="24" r="0.8"/>
+</svg>
+        </button></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+
+<iframe src="[[url]]" frameborder="0" id="iframe"></iframe>
+
+</main>
+  </template>
+
+  <script>
+    /**
+     * `toggle-viewport`
+     * Component for preview a site with different viewport
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ToggleViewport extends Polymer.GestureEventListeners(Polymer.Element) {
+      static get is() { return 'toggle-viewport'; }
+      static get properties() {
+        return {
+          url: {
+            type: String,
+            value: ''
+          },
+          height: {
+            type: Number,
+            value: 0,
+            observer: '_updateHeight'
+          },
+          width: {
+            type: Number,
+            value: 0,
+            observer: '_updateWidth'
+          }
+        };
+      }
+      constructor(){
+        super();
+        window.addEventListener('resize', this._checkoutMargin.bind(this), false);
+      }
+      _checkoutMargin(){
+        if(this.height > 0){
+          let mh = this.$.main.offsetHeight;
+          let res = (mh - this.height) / 2;
+          (res > 0) ? this.$.iframe.style.marginTop = res + "px" : this.$.iframe.style.marginTop = 0; 
+        }else {
+          this.$.iframe.style.marginTop = 0; 
+        }
+      }
+      _updateHeight(){
+        if(this.height > 0){
+          this.updateStyles({'--iframe-height': this.height  + "px"});
+          this._checkoutMargin();
+        }else {
+          this.updateStyles({'--iframe-height': "100%"});
+          this.$.iframe.style.marginTop = 0;
+        }
+
+      }
+      _updateWidth(){
+        if(this.width > 0){
+          this.updateStyles({'--iframe-width': this.width  + "px"});
+        }else {
+          this.updateStyles({'--iframe-width': "100%"});
+        }
+      }
+      _removeSelected(){
+        let btns = this.$.nav.querySelectorAll('button');
+        btns.forEach(function(el) {
+          el.classList.remove('selected');
+        });
+      }
+      resize(e) {
+        let size = e.target.getAttribute('data-size').split(',');
+        
+        this._removeSelected();
+        e.target.classList.add('selected');
+        
+        this.width = size[0];
+        this.height = size[1];
+      }
+    }
+
+    window.customElements.define(ToggleViewport.is, ToggleViewport);
+  </script>
+</dom-module>
