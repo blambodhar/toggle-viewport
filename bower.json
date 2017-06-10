@@ -2,6 +2,7 @@
   "name": "toggle-viewport",
   "description": "Component for preview a site with different viewport",
   "main": "toggle-viewport.html",
+  "version": "0.1.0",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
