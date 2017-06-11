@@ -8,15 +8,11 @@ Component for preview a site with different viewport
 
 Import the component
 
-```
+```html
  <link rel="import" href="toggle-viewport.html">
 ```
 
 Use the tag with attribute url that you prefer, for example:
-
-```
- <toggle-viewport url="https://www.polymer-project.org/"></toggle-viewport>
-```
 
 <!--
 ```
