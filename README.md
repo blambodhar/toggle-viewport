@@ -9,29 +9,37 @@ Component for preview a site with different viewport
 Import the component
 
 ```
- <link rel="import" href="../toggle-viewport.html">
+ <link rel="import" href="toggle-viewport.html">
 ```
 
-Use the tag with attribute that you prefer, for example:
+Use the tag with attribute url that you prefer, for example:
 
 ```
  <toggle-viewport url="https://www.polymer-project.org/"></toggle-viewport>
 ```
 
-## Install the Polymer-CLI
-
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
-
-## Viewing Your Element
-
+<!--
 ```
-$ polymer serve
+<custom-element-demo>
+  <template>
+    <link rel="import" href="toggle-viewport.html">
+    <toggle-viewport url="https://www.polymer-project.org/"></toggle-viewport>
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+ <toggle-viewport url="https://www.polymer-project.org/"></toggle-viewport>
 ```
 
-## Running Tests
 
-```
-$ polymer test
-```
+## Styling
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+The following custom properties are available for styling:
+
+Custom property  | Default
+-----------------|----------
+`--header-color` | `#202020`
+`--body-color`   | `#262626`
+`--active-color` | `#1a88ef`
