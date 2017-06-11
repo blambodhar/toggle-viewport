@@ -14,17 +14,6 @@ Import the component
 
 Use the tag with attribute url that you prefer, for example:
 
-<!--
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="toggle-viewport.html">
-    <toggle-viewport url="https://www.polymer-project.org/"></toggle-viewport>
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
 ```html
  <toggle-viewport url="https://www.polymer-project.org/"></toggle-viewport>
 ```
